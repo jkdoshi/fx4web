@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+	<!--
+		<definition  name="template.parent" path="/templates/parent.jsp"/>
+		<definition  name="template.child" path="/templates/child.jsp"/>
+		
+		<definition  name="template.header" path="/templates/header.jsp"/>
+		<definition  name="template.footer" path="/templates/footer.jsp"/>
+		<definition  name="template.menu" path="/templates/menu.jsp"/>
+	-->
+
+	<definition  name="sharedform" path="sharedform.jsp"/>
+	<definition  name="cidform" path="cidform.jsp"/>
+
+	<definition name="base-layout.tiles"
+		page="/templates/base-layout.jsp">
+		<put name="title" type="string" value="Untitled" />
+		<put name="header" value="/templates/header.jsp" />
+		<put name="footer" value="/templates/footer.jsp" />
+		<put name="body" value="/templates/body.jsp" />
+		<put name="menu" value="/templates/menu.jsp" />
+	</definition>
+
+	<definition name="parent.tiles" extends="base-layout.tiles">
+		<put name="title" type="string" value="Parent Window" />
+		<put name="body" value="/parent.jsp" />
+	</definition>
+
+	<definition name="child.tiles" extends="base-layout.tiles">
+		<put name="title" type="string" value="Child Window" />
+		<put name="body" value="/child.jsp" />
+	</definition>
+
+</tiles-definitions>

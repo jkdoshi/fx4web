@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+	<application>
+		<view-handler>
+			org.apache.myfaces.tomahawk.application.jsp.JspTilesViewHandlerImpl
+		</view-handler>
+	</application>
+
+	<managed-bean>
+		<managed-bean-name>SharedBean</managed-bean-name>
+		<managed-bean-class>
+			com.doshiland.webdemo.backing.SharedBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>employees</property-name>
+			<map-entries>
+				<key-class>java.lang.String</key-class>
+				<value-class>java.lang.Long</value-class>
+				<map-entry>
+					<key>One</key>
+					<value>1</value>
+				</map-entry>
+				<map-entry>
+					<key>Two</key>
+					<value>2</value>
+				</map-entry>
+				<map-entry>
+					<key>Three</key>
+					<value>3</value>
+				</map-entry>
+				<map-entry>
+					<key>Four</key>
+					<value>4</value>
+				</map-entry>
+				<map-entry>
+					<key>Five</key>
+					<value>5</value>
+				</map-entry>
+				<map-entry>
+					<key>Six</key>
+					<value>6</value>
+				</map-entry>
+				<map-entry>
+					<key>Seven</key>
+					<value>7</value>
+				</map-entry>
+				<map-entry>
+					<key>Eight</key>
+					<value>8</value>
+				</map-entry>
+				<map-entry>
+					<key>Nine</key>
+					<value>9</value>
+				</map-entry>
+			</map-entries>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>UnsharedBean</managed-bean-name>
+		<managed-bean-class>
+			com.doshiland.webdemo.backing.UnsharedBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+</faces-config>

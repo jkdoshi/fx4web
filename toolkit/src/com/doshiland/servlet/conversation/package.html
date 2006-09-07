@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>package - com.doshiland.jsf</title>
+</head>
+<body>
+<p>Provides infrastructure for implementing a "conversation" scope (bigger than
+"request" scope but smaller than "session" scope) in your web-applications.</p>
+<h1>Overview</h1>
+<h2>Web Application Scopes</h2>
+<p>Web applications have a choice of storing objects in various scopes.</p>
+<ol>
+    <li><strong>request scope</strong>: Appropriate for storing attributes or
+    objects that are used only during a single request processing and are not
+    needed to hold their state across requests.</li>
+    <li><strong>session scope</strong>: Appropriate for storing attributes or
+    objects that are used in multiple requests by a single user session and need
+    to hold their state across these requests throughout the length of the
+    session. These could be user information, user preferences and <em>other
+    data that is not really appropriate for this scope, but is placed in there
+    anyways due the absence of a "conversation" scope</em></li>
+    <li><strong>application scope</strong>: Appropriate for storing attributes
+    or objects that are shared by all sessions in the application. These could
+    be global settings, catalog information and other reference data.</li>
+</ol>
+<h2>The need for a "conversation" scope</h2>
+<p>Most web-applications have data that is shared across requests (therefore
+bigger than request scope), but isn't needed to be held on for the entire length
+of the session. This is where the "conversation" scope comes in. Since the
+standard J2EE API does not provide such a scope officially, we simulate it by
+using "session" scope instead and then having a servlet filter move data into
+and out of the session as appropriate. Just like a request identifies the
+session it is a part of (using either cookies or URL rewriting), it also
+identifies the conversation it is a part of (by sending the conversation id with
+each request). A servlet filter manages the data attached to the "conversation"
+scope, keeps track of when a conversation was last accessed and expires
+conversations (makes the conversation and the attached data for garbage
+collection) after a timeout period passes.</p>
+<h2>Multiple concurrent conversations</h2>
+<p>The real benefit of a conversation is evident mostly when using multiple
+concurrent conversations. This happens when your web-application opens multiple
+child browser windows from a single parent browser window. Say, you have a
+parent window showing a list of employees you can edit. When you click on a en
+employee, the parent window opens a child window that displays the full details
+of the employee and associated child records (employee's salary info, contact
+info, benefits info etc.) The parent window is not affiliated to any
+conversation, so its data is stored in the session scope. But when it opens the
+child window, it sends a new conversation id with the initial request and causes
+a new conversation to be started (or an existing conversation to be retrieved,
+in case the identified conversation already exists). From here on, every request
+(GET or POST) originating from this child window will contain the conversation
+id, and this library will make sure that any attributes or objects attached to
+the "session" scope are really considered to be "conversation" scope and are
+made available in the "session" scope on each request coming with that
+conversation id.</p>
+<h1>How it works</h1>
+<p>The server side of the library is implemented using a servlet filter, and the
+client side is implemented in JavaScript.</p>
+<ol>
+    <li>The JavaScript library extends the <code>window.open</code> function
+    such that <code>window.name</code> is sent with the initial request as a
+    request parameter. The parent browser window opens a child browser window
+    using this extended <code>window.open</code>, which causes the "conversation
+    id" to be sent with the first request (the first argument, the URL part of
+    the function call). The <code>window.name</code> JavaScript property is used
+    as the value of the conversation id, since it will remain with the child
+    window forever and yet is unique across browser windows.</li>
+    <li>The JavaScript library is also programmed to instrument each hyperlink
+    and each form in the child window such that they include the conversation id
+    (<code>window.name</code>) when the link is clicked (every hyperlink has
+    been modified to include the conversation id in the search query string part
+    of the URL) or the form is submitted (every form has a hidden field added
+    that holds the conversation id and gets submitted with the form).</li>
+    <li>The filter captures the conversation id and looks for a Conversation
+    instance for that key in the ConversationMap. If none is found, a new one is
+    created.</li>
+    <li>The filter maintains a list of "shared objects" in the session (objects
+    that are attached to a session outside of a conversation). It updates this
+    list just before loading a conversation into the session. Any object added
+    to the session without an active conversation is considered "shared" (or
+    truly "session" scoped), which any added during a request with an active
+    conversation is considered conversation-specific (or in the "conversation"
+    scope).</li>
+    <li>The filter moves all objects present in the Conversation instance into
+    the session, so that rest of the application can reference those objects as
+    if they were session scoped for the duration of current request.</li>
+    <li>Filter propagates the filter chain and thus processes the request. This
+    is where your web-application (JSPs, servlets, JSF backing beans and others)
+    does it's magic by using the "conversation" scoped obects.</li>
+    <li>At the end of the request, all objects present in the session (excluding
+    the "shared" ones) are considered part of the conversation and are moved out
+    of the session and into the Conversation instance.</li>
+</ol>
+<h1>How to use it</h1>
+<ol>
+    <li>Include this library JAR in your WAR's WEB-INF/lib directory.</li>
+    <li>Define and map the {@link
+    com.doshiland.servlet.conversation.ConversationFilter} filter in your
+    web.xml. Make sure that it intercepts all requests that require conversation
+    scope management. Typically, this means all request for dynamic content
+    (JSPs, JSF's FacesServlet etc). You also have to define and map the
+    ResourceFilter to any URI that might be used to reference resources (.js,
+    .css, images etc.) packaged inside this library. Example ... <pre>
+&lt;filter&gt;
+    &lt;filter-name&gt;ConversationFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;com.doshiland.servlet.conversation.ConversationFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+
+&lt;filter&gt;
+    &lt;filter-name&gt;ResourceFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;com.doshiland.servlet.ResourceFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;ConversationFilter&lt;/filter-name&gt;
+    &lt;servlet-name&gt;Faces Servlet&lt;/servlet-name&gt;
+&lt;/filter-mapping&gt;
+
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;ResourceFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/com/doshiland/servlet/resource/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+
+</pre></li>
+    <li>In your pages (JSP or HTML or others) that are displayed in either
+    parent or child browser windows, include the "conversation.js" JavaScript
+    file. Examples ...
+    <ol>
+    <li><pre>&lt;outputText escape=&quot;<u>false</u>&quot; value=&quot;<u>&lt;script type=&quot;text/javascript&quot; src=&quot;#{contextPath}&quot;&gt;&lt;/script&gt;</u>&quot;/&gt;</pre></li>
+    <li><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;<u>&lt;c:url value=&quot;/conversation.js&quot;/&gt;</u>&quot;&gt;&lt;/script&gt;</pre></li>
+    </ol>
+    </li>
+</ol>
+</body>
+</html>
