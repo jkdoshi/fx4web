@@ -1,7 +1,7 @@
 PROJECT: Doshiland Web Library
 ------------------------------
 
-Doshiland web library is a general purpose library of tools that can be used
+fx4web toolkit is a general purpose collection of tools that can be used
 in web-application development. Some of the features provided are ...
 - implementation of a "conversation" scope (a scope that is in-between
   "request" and "session" scope of the servlet API). This is very useful

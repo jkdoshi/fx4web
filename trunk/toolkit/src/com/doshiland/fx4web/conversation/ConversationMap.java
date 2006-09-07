@@ -1,10 +1,17 @@
 /*
- * COPYRIGHT NOTICE:
+ * Copyright (c) 2006 Jitesh Doshi
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
  * 
- * This software is copyright (c) Jitesh Doshi <jitesh@doshiland.com> 2006. It
- * is made available free for use without any warranties. You are given
- * permission to use it as long as this copyright notice is preserved unmodified.
- * See http://www.doshiland.com/copyright for a complete license.
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
  */
 
 package com.doshiland.fx4web.conversation;
