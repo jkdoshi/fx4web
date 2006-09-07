@@ -9,12 +9,34 @@
 <h1>fx4web toolkit</h1>
 <p>fx4web toolkit provides utilities for web-programming in Java. Aside
 of miscellenious stuff, the main features are ...</p>
-<ol>
-    <li>Implementation of HTTP "conversation" scope (akin to "request" and
-    "session" scope for attributes/beans).</li>
-    <li>A JSF PhaseListener that places a "floating" window on all your pages
-    containing JSF messages that are hyperlinked to the components the message
-    pertains to.</li>
-</ol>
+<ul>
+
+	<li>client- as well as server-side support for 'conversation' context
+	variables. Conversation context is wider than a single request, but
+	narrower than a session. Each window can have it's own conversation
+	context, but it can also share it with other windows if needed.</li>
+	<li>conversion of HTML tables into scrollable HTML tables with static
+	headers.</li>
+	<li>automatic conversion of HTML listboxes into sloshbuckets (a pair of
+	listboxes with a pair of buttons to allow transfering of options in
+	both directions)</li>
+	<li>A generic DHTML "floating window" showing application generated
+	messages. The application delivers the messages in form of a JavaScript
+	array variable and the client-side JavaScript generates the HTML UI
+	on-the-fly. For web-applications that use JSF, a pre-packaged
+	PhaseListener is provided that does all the work. For non-JSF
+	applications, one can be written very easily.</li>
+	<li>automatic conversion of any HTML element (embedded in current page)
+	into a popup such that it can be shown or hidden with one JavaScript
+	function call.</li>
+	<li>Several other misc. features such as ...
+	<ul>
+		<li>DHTML code to generate a 'silkscreen' (a layer that blocks user
+		interaction the UI).</li>
+		<li>centering of any absolutely-positioned element</li>
+		<li>make any element 'floating' (draggable window)</li>
+		<li>and more ...</li>
+	</li>
+</ul>
 </body>
 </html>
