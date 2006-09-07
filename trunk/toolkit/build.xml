@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="doshiland-web" default="jar">
+<project name="fx4web" default="jar">
 	<tstamp>
 		<format property="build.tstamp" pattern="yyyy/MM/dd-kk:mm:ss.SSS" locale="en" />
 	</tstamp>

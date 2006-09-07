@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>doshiland-web-demo</name>
+	<name>fx4web-demo</name>
 	<comment></comment>
 	<projects>
-		<project>doshiland-web</project>
+		<project>fx4web</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
