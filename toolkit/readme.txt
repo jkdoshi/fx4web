@@ -1,5 +1,5 @@
-PROJECT: Doshiland Web Library
-------------------------------
+PROJECT: fx4web toolkit
+-----------------------
 
 fx4web toolkit is a general purpose collection of tools that can be used
 in web-application development. Some of the features provided are ...
@@ -23,3 +23,5 @@ in web-application development. Some of the features provided are ...
 
 More detailed information is available in the generated javadocs. Please
 run "ant dist" to get a full distribution which includes the javadocs.
+
+The main site for this project is http://code.google.com/p/fx4web.
