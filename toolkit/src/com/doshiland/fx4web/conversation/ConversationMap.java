@@ -7,7 +7,7 @@
  * See http://www.doshiland.com/copyright for a complete license.
  */
 
-package com.doshiland.servlet.conversation;
+package com.doshiland.fx4web.conversation;
 
 import java.util.Enumeration;
 import java.util.HashMap;

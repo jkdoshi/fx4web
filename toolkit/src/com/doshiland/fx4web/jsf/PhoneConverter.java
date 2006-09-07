@@ -1,4 +1,4 @@
-package com.doshiland.jsf;
+package com.doshiland.fx4web.jsf;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

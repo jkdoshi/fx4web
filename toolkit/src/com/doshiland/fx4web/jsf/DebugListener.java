@@ -1,4 +1,4 @@
-package com.doshiland.jsf;
+package com.doshiland.fx4web.jsf;
 
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;

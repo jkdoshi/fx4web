@@ -7,7 +7,7 @@
  * See http://www.doshiland.com/copyright for a complete license.
  */
 
-package com.doshiland.servlet;
+package com.doshiland.fx4web;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
