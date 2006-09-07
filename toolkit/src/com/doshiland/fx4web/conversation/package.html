@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>package - com.doshiland.jsf</title>
+<title>package - com.doshiland.fx4web.conversation</title>
 </head>
 <body>
 <p>Provides infrastructure for implementing a "conversation" scope (bigger than
@@ -97,7 +97,7 @@ client side is implemented in JavaScript.</p>
 <ol>
     <li>Include this library JAR in your WAR's WEB-INF/lib directory.</li>
     <li>Define and map the {@link
-    com.doshiland.servlet.conversation.ConversationFilter} filter in your
+    com.doshiland.fx4web.conversation.ConversationFilter} filter in your
     web.xml. Make sure that it intercepts all requests that require conversation
     scope management. Typically, this means all request for dynamic content
     (JSPs, JSF's FacesServlet etc). You also have to define and map the
@@ -105,12 +105,12 @@ client side is implemented in JavaScript.</p>
     .css, images etc.) packaged inside this library. Example ... <pre>
 &lt;filter&gt;
     &lt;filter-name&gt;ConversationFilter&lt;/filter-name&gt;
-    &lt;filter-class&gt;com.doshiland.servlet.conversation.ConversationFilter&lt;/filter-class&gt;
+    &lt;filter-class&gt;com.doshiland.fx4web.conversation.ConversationFilter&lt;/filter-class&gt;
 &lt;/filter&gt;
 
 &lt;filter&gt;
     &lt;filter-name&gt;ResourceFilter&lt;/filter-name&gt;
-    &lt;filter-class&gt;com.doshiland.servlet.ResourceFilter&lt;/filter-class&gt;
+    &lt;filter-class&gt;com.doshiland.fx4web.ResourceFilter&lt;/filter-class&gt;
 &lt;/filter&gt;
 
 &lt;filter-mapping&gt;
@@ -120,7 +120,7 @@ client side is implemented in JavaScript.</p>
 
 &lt;filter-mapping&gt;
     &lt;filter-name&gt;ResourceFilter&lt;/filter-name&gt;
-    &lt;url-pattern&gt;/com/doshiland/servlet/resource/*&lt;/url-pattern&gt;
+    &lt;url-pattern&gt;/com/doshiland/fx4web/resource/*&lt;/url-pattern&gt;
 &lt;/filter-mapping&gt;
 
 </pre></li>
