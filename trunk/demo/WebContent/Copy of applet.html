@@ -1,0 +1,63 @@
+ <?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Applet</title>
+</head>
+<body>
+
+<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" 
+        height="300" width="450" > 
+        0 didn't work
+	<param name="code" value="com/doshiland/web/applet/upload/UploadApplet" />
+	<param name="archive" value="applet/lib/applet.jar,applet/lib/activation.jar,applet/lib/http_client.jar,applet/lib/dmsroot.jar,applet/lib/soap.jar,applet/lib/mail.jar" />
+
+	<param name="appName" value="grs" />
+	<param name="appPassword" value="grsdev" />
+	<param name="targetFolder" value="/ereg/jdoshi" />
+</object> 
+
+
+<object classid="java:com/doshiland/web/applet/upload/UploadApplet.class" 
+        type="application/x-java-applet"
+		archive="applet/lib/applet.jar,applet/lib/activation.jar,applet/lib/http_client.jar,applet/lib/dmsroot.jar,applet/lib/soap.jar,applet/lib/mail.jar"
+		width="300"
+		height="300"
+>
+1 didn't work
+  <!-- Konqueror browser needs the following param -->
+  <param name="archive" value="applet/lib/applet.jar,applet/lib/activation.jar,applet/lib/http_client.jar,applet/lib/dmsroot.jar,applet/lib/soap.jar,applet/lib/mail.jar" />
+<!--<![endif]-->
+  <object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" 
+          height="300" width="450" > 
+          2 didn't work
+    <param name="code" value="com/doshiland/web/applet/upload/UploadApplet" />
+    <param name="archive" value="applet/lib/applet.jar,applet/lib/activation.jar,applet/lib/http_client.jar,applet/lib/dmsroot.jar,applet/lib/soap.jar,applet/lib/mail.jar" />
+  </object> 
+<!--[if !IE]>-->
+</object>
+<!--<![endif]-->
+
+<object
+	classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
+	width="200"
+	height="200"
+	data="com/doshiland/web/applet/upload/UploadApplet.class"
+	archive="applet/lib/applet.jar,applet/lib/activation.jar,applet/lib/http_client.jar,applet/lib/dmsroot.jar,applet/lib/soap.jar,applet/lib/mail.jar">
+	3 didn't work
+	<param name="code" value="com/doshiland/web/applet/upload/UploadApplet" />
+</object>
+<!--<applet code="com.doshiland.web.applet.upload.UploadApplet" height="200"
+	archive="applet/lib/applet.jar applet/lib/activateion.jar applet/lib/http_client.jar">
+Your browser does not support the <code>applet</code> tag.
+	</applet>-->
+<applet code="com/doshiland/web/applet/upload/UploadApplet"
+	archive="applet/lib/applet.jar,applet/lib/activation.jar,applet/lib/http_client.jar,applet/lib/dmsroot.jar,applet/lib/soap.jar,applet/lib/mail.jar">
+	4 didn't work.
+	<param name="appName" value="grs" />
+	<param name="appPassword" value="grsdev" />
+	<param name="targetFolder" value="/ereg/jdoshi" />
+</applet>
+</body>
+</html>

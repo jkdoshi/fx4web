@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="fx4web.css" />
+<script type="text/javascript" src="prototype.js"></script>
+<script type="text/javascript" src="fx4web.js"></script>
+<script type="text/javascript"><!--
+function showMessages() {
+FX4Web.showMessages([
+{clientId:'txtUrl', severity:'Error', summary:'Validation Error', detail:'"txt1": Value is required.'},
+{clientId:'_idJsp2:txt2', severity:'Error', summary:'Validation Error', detail:'"txt2": Value is required.'},
+{clientId:'_idJsp2:txt3', severity:'Error', summary:'Validation Error', detail:'"txt3": Value is required.'},
+{clientId:'_idJsp2:txt4', severity:'Error', summary:'Validation Error', detail:'"txt4": Value is required.'}]
+, {title: 'Validation Messages'});
+}
+//--></script>
+<style>
+#mypopup {
+background-color: yellow;
+border: 3px solid blue;
+}
+</style>
+</head>
+<body>
+<h1 onclick='showMessages()'>Show Messages</h1>
+<input type="text" id="txtUrl"  style='background-color: red' />
+<input value="show html" type="submit" />
+<select>
+	<option value='1'>one</option>
+	<option value='2'>two</option>
+	<option value='3'>three</option>
+	<option value='4'>four</option>
+</select>
+<div id="divResponse" />
+<table id='mypopup' class="fx4web-popup">
+	<tr>
+		<td><label>f1</label></td>
+		<td><input type='text'/>
+	</tr>
+	<tr>
+		<td><label>f2</label></td>
+		<td><select>
+			<option value='1'>one</option>
+			<option value='2'>two</option>
+			<option value='3'>three</option>
+			<option value='4'>four</option>
+		</select></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="button"
+			onclick="FX4Web.hidePopup('mypopup')" value='Hide Popup' /></td>
+	</tr>
+</table>
+<input id='btn1' type="button" onclick="FX4Web.showPopup('mypopup')"
+	value='Show Popup' />
+<div class='fx4web-floating' id='div1' style="width: 100px; height:150px; background-color: yellow; border: 1px solid red">
+<div id='div2' style="height:30px; background-color: blue">
+</div>
+</div>
+	
+</body>
+</html>

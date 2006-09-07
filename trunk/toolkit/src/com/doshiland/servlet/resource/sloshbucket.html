@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="doshiland-web.css" />
+<script type="text/javascript" src="prototype.js"></script>
+<script type="text/javascript" src="doshiland-web.js"></script>
+<script type="text/javascript">
+function doit() {
+	var tbl = document.createElement('TABLE');
+alert('here2');
+	tbl.innerHTML = '<tr><td>hi</td></tr>';
+alert('here3');
+	document.body.appendChild(tbl);
+}
+</script>
+<style>
+table {
+border: 1px solid blue;
+}
+</style>
+</head>
+<body>
+<table>
+	<tr>
+		<td><select size="10">
+			<option value='1'>one</option>
+			<option value='2'>two</option>
+			<option value='3'>three</option>
+			<option value='4'>four</option>
+		</select></td>
+		<td><input type='button' value='xx' /> <br />
+		<input type='button' value='yy' /></td>
+		<td><select size="10">
+			<option value='1'>one</option>
+			<option value='2'>two</option>
+			<option value='3'>three</option>
+			<option value='4'>four</option>
+		</select></td>
+	</tr>
+</table>
+<form>
+<select class='doshiland-sloshbucket' size="10" id='sel1' multiple="multiple">
+	<option value='1'>one</option>
+	<option value='2'>two</option>
+	<option value='3'>three</option>
+	<option value='4'>four</option>
+</select>
+<input type='button' value='Convert ListBox to SloshBucket'
+	onclick='DoshilandWeb.UI.sloshBucket("sel1")' />
+<input type='submit' value='type=submit Submission'/>
+<input type='button' value='type=button Submission'
+	onclick='submit()' />
+</form>
+</body>
+</html>

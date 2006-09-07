@@ -1,0 +1,33 @@
+
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Applet</title>
+<style>
+object {
+border: 1px solid black;
+}
+</style>
+<script type="text/javascript">
+function informOpener() {
+	var txt = opener.document.forms[0].elements['files'];
+	var applet = document.applets['foo'];
+	var count = applet.getFileCount();
+	if(count > 0) {
+		txt.value = '';
+	}
+	for(var i = 0; i < count; i++) {
+		txt.value += applet.getFile(i) + '\n';
+	}
+}
+</script>
+</head>
+<body onunload="informOpener()">
+<applet height="50" width="100" name="foo" id="foo"
+	code="com/doshiland/web/applet/upload/MultiFileSelectionApplet"
+	archive="applet/lib/applet.jar"> </applet>
+<input type="button" onclick="informOpener()"/>
+</body>
+</html>

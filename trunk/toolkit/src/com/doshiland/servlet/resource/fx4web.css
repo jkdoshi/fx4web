@@ -1,0 +1,103 @@
+@CHARSET "ISO-8859-1";
+
+LABEL {
+	background-color: lightgray;
+}
+
+/*
+.error {
+	list-style-image: url(/crud/images/warning.gif);
+	background-repeat: no-repeat;
+	background-position: left;
+	list-style-position: inside;
+	cursor: pointer;
+	color: red;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid solid solid solid;
+	border-color: black black black black;
+	width: 1em;
+	height: 1em;
+	overflow: hidden;
+	padding-left: 10px;
+}
+*/
+
+.errors {
+	color: red;
+	display: list-item;
+	list-style-image: url("/crud/images/warning.gif");
+	list-style-position: inside;
+	/*
+	background-color: #ffcfaf;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid solid solid solid;
+	border-color: black black black black;
+	*/
+}
+
+div.fx4web-floating ul li, div.fx4web-floating table td {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+div.fx4web-floating {
+	border-width: 2px 2px 2px 2px;
+	border-color: blue;
+	border-style: solid;
+	background-color: #FFFFDF;
+	position: absolute;
+	/* opacity: 0.8; */
+	/* filter: alpha(opacity=80); */
+	z-index: 5000;
+	text-align: center;
+}
+
+div.fx4web-floating .fx4web-title {
+	top: 0;
+	left: 0;
+	border-width: 0 0 0 0;
+	background-color: blue;
+	height: 1em;
+	text-align: center;
+	font-weight: bold;
+	color: white;
+	cursor: move;
+	position: relative;
+	width: 300px; /* XXX: this is bad */
+}
+
+/*
+button.fx4web-close, button.fx4web-minimize {
+	font-size: 12px;
+	font-weight: bold;
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	vertical-align: middle;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+*/
+
+div.fx4web-floating li {
+	text-align: left;
+}
+
+div#silkscreen {
+	/*
+	opacity: 0.6;
+	*/
+	background-color: white;
+	filter: alpha(opacity=60);
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 100;
+}
+
+.fx4web-popup {
+	display: none;
+	position: absolute;
+	z-index: 150;
+	background-color: white;
+}

@@ -1,0 +1,6 @@
+COPYRIGHT NOTICE & LICENSE
+This software is copyright (c) Jitesh Doshi 2006.
+You are given permission to use and modify this software without any
+warranties as long as this copyright notice is preserved and you do
+not hold the authors of this software responsible for any damages
+related to the use of this software.

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<project name="doshiland-web" default="jar">
+	<tstamp>
+		<format property="build.tstamp" pattern="yyyy/MM/dd-kk:mm:ss.SSS" locale="en" />
+	</tstamp>
+	<property file="project.properties" />
+	<path id="build.classpath">
+		<pathelement path="${build.libs}" />
+	</path>
+	<target name="jar" depends="compile">
+		<mkdir dir="${dist}" />
+		<jar destfile="${jar.file}" basedir="${build.classes}">
+			<manifest>
+				<attribute name="Build-Timestamp" value="${build.tstamp}" />
+				<attribute name="Build-User" value="${user.name}" />
+			</manifest>
+		</jar>
+	</target>
+	<target name="compile">
+		<mkdir dir="${build.classes}" />
+		<javac destdir="${build.classes}" srcdir="${src}" classpathref="build.classpath" debug="true" />
+		<copy todir="${build.classes}">
+			<fileset dir="${src}">
+				<exclude name="**/*.java" />
+				<exclude name="**/*.html" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="distclean" depends="clean">
+		<delete dir="${dist}" />
+	</target>
+	<target name="clean">
+		<delete dir="${build}" />
+	</target>
+	<target name="doc-zip" depends="javadoc">
+		<mkdir dir="${dist}" />
+		<zip destfile="${doc.file}" basedir="${build.javadoc}" />
+	</target>
+	<target name="src-zip">
+		<mkdir dir="${dist}" />
+		<zip destfile="${src.file}" basedir="${src}" />
+	</target>
+	<target name="javadoc">
+		<javadoc destdir="${build.javadoc}" classpathref="build.classpath" overview="${src}/overview.html" windowtitle="${javadoc.windowtitle}">
+			<fileset dir="${src}" />
+			<link href="${javadoc.link.jdk}" />
+			<link href="${javadoc.link.j2ee}" offline="true" packagelistloc="${javadoc.link.j2ee.offline}" />
+			<link href="${javadoc.link.jsf}" />
+		</javadoc>
+	</target>
+	<target name="dist" depends="jar,doc-zip,src-zip">
+		<zip destfile="${dist.file}">
+			<fileset dir="${dist}">
+				<exclude name="${dist.filename}" />
+			</fileset>
+		</zip>
+	</target>
+</project>
