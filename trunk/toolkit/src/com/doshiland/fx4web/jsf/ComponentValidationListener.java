@@ -7,7 +7,7 @@
  * See http://www.doshiland.com/copyright for a complete license.
  */
 
-package com.doshiland.jsf;
+package com.doshiland.fx4web.jsf;
 
 import java.util.Iterator;
 import java.util.List;
