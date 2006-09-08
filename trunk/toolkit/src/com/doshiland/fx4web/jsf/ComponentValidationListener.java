@@ -64,7 +64,7 @@ public class ComponentValidationListener implements PhaseListener {
     private static String genJavaScriptCodeForMessages(FacesContext facesContext) {
         if (facesContext.getMessages().hasNext()) {
             StringBuffer jsTxt = new StringBuffer(
-                "FX4Web.showMessages([");
+                "Event.observe(window, 'load', function() {FX4Web.showMessages([");
             appendMessagesForClientId(facesContext, null, jsTxt);
             // then add messages for each clientId that has them
             Iterator<String> itrClientIds = facesContext
@@ -77,7 +77,7 @@ public class ComponentValidationListener implements PhaseListener {
             if (jsTxt.length() > 0 && jsTxt.charAt(jsTxt.length() - 1) == ',') {
                 jsTxt.deleteCharAt(jsTxt.length() - 1);
             }
-            jsTxt.append("], {title: 'Application Messages'});");
+            jsTxt.append("], {title: 'Application Messages'});});");
             return jsTxt.toString();
         } else {
             return null;
