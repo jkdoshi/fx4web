@@ -7,7 +7,7 @@
 
     <lifecycle>
     	<!-- collects faces messages to send them as javascript objects -->
-        <phase-listener>com.doshiland.jsf.ComponentValidationListener</phase-listener>
+        <phase-listener>com.doshiland.fx4web.jsf.ComponentValidationListener</phase-listener>
     </lifecycle>
    	<!-- logs information about various JSF lifecycle phases -->
 	<!--
