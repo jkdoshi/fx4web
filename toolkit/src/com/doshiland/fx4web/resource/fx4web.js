@@ -70,8 +70,8 @@ FX4Web.getLabelFor =  function(input) {
 /* determine the label TEXT for a given input field */
 FX4Web.getLabelTextFor =  function(input) {
     var label = this.getLabelFor(input);
-    if(label) {
-        return $F(label);
+    if(label && label.firstChild) {
+        return label.firstChild.nodeValue;
     }
     return null;
 }
@@ -325,11 +325,12 @@ FX4Web.showMessages =  function(messages, title) {
     for(var i = 0; i < messages.length; i++) {
         var li = document.createElement('LI');
         var msg = messages[i];
-        var text = msg.summary || msg.detail;
+        var text = msg.detail ||  msg.summary;
         if(msg.clientId) {
             var labelText = this.getLabelTextFor(msg.clientId);
             if(labelText) {
-                text = labelText + ": " + text;
+                // text = labelText + ": " + text;
+                text = text.replace(/^\"([^\"]*)\"/, labelText);
             }
         }
         var textNode = document.createTextNode(text);
