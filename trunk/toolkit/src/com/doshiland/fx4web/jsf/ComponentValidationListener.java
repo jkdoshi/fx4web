@@ -34,7 +34,7 @@ import org.apache.myfaces.renderkit.html.util.AddResourceFactory;
 
 @SuppressWarnings("serial")
 public class ComponentValidationListener implements PhaseListener {
-    private static final String MAPPING_PREFIX = "/com/doshiland/servlet/resource/";
+    private static final String MAPPING_PREFIX = "/com/doshiland/fx4web/resource/";
 
     private static final String ATTR_STYLECLASS = "styleClass";
 

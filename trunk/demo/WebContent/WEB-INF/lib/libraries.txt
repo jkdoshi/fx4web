@@ -15,10 +15,10 @@ commons-lang-2.1.jar
 commons-logging-1.0.4.jar
 jstl-1.1.0.jar
 tiles.jar
-doshiland-web.jar
+fx4web.jar
 
 You can find all of them at ...
 - http://www.apache.org/dyn/closer.cgi/myfaces/binaries/myfaces-core-1.1.3-bin.zip
 - http://www.apache.org/dyn/closer.cgi/myfaces/binaries/tomahawk-1.1.3-bin.zip
 - http://www.lifl.fr/~dumoulin/tiles/tiles.zip.
-- http://doshiland.com/doshiland-web
+- http://code.google.com/p/fx4web/
