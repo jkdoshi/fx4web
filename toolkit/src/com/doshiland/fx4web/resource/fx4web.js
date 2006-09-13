@@ -515,11 +515,6 @@ FX4Web.initConversations = function() {
 			addParamToLinks(fldname, cid);
 		}
 	//}
-	
-	// remember the original ancestor window
-	if(!FX4Web.ancestorWindow) {
-		FX4Web.ancestorWindow = window;
-	}
 }
 
 Event.observe(window, "load", FX4Web.onload);
