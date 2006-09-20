@@ -224,7 +224,7 @@ FX4Web.jsfSloshBucket =  function(selSrc, selDst, btnAdd, btnRem) {
 
 /* cover the whole page with a translucent DIV that prevents user interaction */
 FX4Web.silkscreen =  function() {
-    var viewport = this.getViewport();
+    var viewport = this.getWindowSize();
     var ssDiv = document.createElement('DIV');
     ssDiv.id = 'silkscreen';
     ssDiv.style.width = viewport.width + "px";
@@ -259,6 +259,20 @@ FX4Web.getViewport =  function() {
     return {
         width: document.body.clientWidth,
         height: document.body.clientHeight
+    }
+}
+
+/* return the dimensions of the current window (visible or not) */
+FX4Web.getWindowSize =  function() {
+    if (navigator.appName.indexOf("Microsoft") >= 0) // MS
+    return {
+        width: document.body.scrollWidth,
+        height: document.body.scrollHeight
+    }
+    else if (document.documentElement && document.documentElement.offsetHeight)
+    return {
+        width: document.documentElement.offsetWidth,
+        height: document.documentElement.offsetHeight
     }
 }
 
