@@ -363,6 +363,7 @@ FX4Web.showMessages =  function(messages, title) {
     var body = document.body;
     if(document.body) {
         document.body.appendChild(container);
+        FX4Web.center(container);
     } else {
         Event.observe(window, 'load', function() {
             document.body.appendChild(container);
