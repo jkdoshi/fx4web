@@ -76,12 +76,35 @@ FX4Web.getLabelTextFor =  function(input) {
     return null;
 }
 
+/* find out if child is a decendent of parent */
+FX4Web.isDecendentOf = function(parent, child) {
+	parent = $(parent);
+	child = $(child);
+	if(!parent || !child) {
+		return false;
+	}
+	while(child.parentNode != null) {
+		if(child.parentNode == parent) {
+			return true;
+		} else {
+			child = child.parentNode;
+		}
+	}
+	return false;
+}
+
 /* make the given container invisible after it was shown as a popup */
 FX4Web.hidePopup =  function(container) {
     container = $(container);
     container.style.display = 'none';
     var ssDiv = container.silkscreen;
     ssDiv.parentNode.removeChild(ssDiv);
+    // restore buggy controls
+	for(var i = 0; i < document.buggyControls.length; i++) {
+		var control = document.buggyControls[i];
+		control['elem'].style.visibility = control['visibility'];
+	}
+	document.buggyControls = [];
     //document.body.style.filter = '';
 }
 
@@ -89,6 +112,20 @@ FX4Web.hidePopup =  function(container) {
 FX4Web.showPopup =  function(container) {
     container = $(container);
     container.silkscreen = this.silkscreen();
+    // hide buggy controls
+    var elems = document.getElementsByTagName('SELECT');
+	document.buggyControls = [];
+    for(var i = 0; i < elems.length; i++) {
+    	var elem = elems[i];
+    	// don't disturb what is inside the container
+    	if(!this.isDecendentOf(container, elem)) {
+    		// save the old style
+    		document.buggyControls.push({'elem': elem, 'visibility': elem.style.visibility});
+    		// set the new style
+    		elem.style.visibility = 'hidden';
+    	}
+    }
+    
     container.style.display = 'block';
     this.center(container);
     //document.body.style.filter = 'Gray';

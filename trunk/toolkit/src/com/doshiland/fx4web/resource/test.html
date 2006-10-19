@@ -16,6 +16,10 @@ FX4Web.showMessages([
 {clientId:'_idJsp2:txt4', severity:'Error', summary:'Validation Error', detail:'"txt4": Value is required.'}]
 , {title: 'Validation Messages'});
 }
+function doit() {
+	var dims = FX4Web.getWindowSize();
+	alert(dims.width + "x" + dims.height);
+}
 //--></script>
 <style>
 #mypopup {
@@ -24,7 +28,7 @@ border: 3px solid blue;
 }
 </style>
 </head>
-<body>
+<body onload="doit()">
 <h1 onclick='showMessages()'>Show Messages</h1>
 <input type="text" id="txtUrl"  style='background-color: red' />
 <input value="show html" type="submit" />
@@ -33,7 +37,7 @@ border: 3px solid blue;
 	<option value='2'>two</option>
 	<option value='3'>three</option>
 	<option value='4'>four</option>
-</select>
+</select>And then some ...
 <div id="divResponse" />
 <table id='mypopup' class="fx4web-popup">
 	<tr>
@@ -61,6 +65,87 @@ border: 3px solid blue;
 <div id='div2' style="height:30px; background-color: blue">
 </div>
 </div>
+
+<pre>
+asdf
+asdlf;jas
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+aa
+
+a
+a
+a
+a
+a
+a
+asdf
+a
+a
+sf
+asf
+as
+f
+saf
+saf
+sa
+fsa
+fsa
+f
+saf
+safsa
+fsa
+f
+saf
+sadf
+saf
+saf
+saf
+s
+fsa
+f
+sf
+sf
+sa
+fsa
+f
+</pre>
 	
 </body>
 </html>
