@@ -34,6 +34,13 @@ import org.apache.myfaces.renderkit.html.util.AddResourceFactory;
 
 @SuppressWarnings("serial")
 public class ComponentValidationListener implements PhaseListener {
+    /**
+     * Name of the application context parameter, if set to true, causes
+     * client-ids to be replaced with their corresponding labels (if any) in
+     * faces messages.
+     */
+    public static final String PARAM_IDREPLACE = "fx4web.replaceIdWithLabel";
+
     private static final String MAPPING_PREFIX = "/com/doshiland/fx4web/resource/";
 
     private static final String ATTR_STYLECLASS = "styleClass";
@@ -55,7 +62,7 @@ public class ComponentValidationListener implements PhaseListener {
         visitComponent(facesContext, root);
         genJavaScriptCodeForMessages(facesContext);
         String jsTxt = genJavaScriptCodeForMessages(facesContext);
-        if(jsTxt != null) {
+        if (jsTxt != null) {
             addResource.addInlineScriptAtPosition(facesContext,
                 AddResource.HEADER_BEGIN, jsTxt);
         }
@@ -106,11 +113,16 @@ public class ComponentValidationListener implements PhaseListener {
     private static void appendMessagesForClientId(FacesContext facesContext,
             String clientId, StringBuffer jsTxt) {
         Iterator<FacesMessage> messages = facesContext.getMessages(clientId);
+        boolean replacesIds = "true".equalsIgnoreCase((String) facesContext
+            .getExternalContext().getApplicationMap().get(PARAM_IDREPLACE));
         while (messages.hasNext()) {
             FacesMessage message = messages.next();
             if (clientId == null) {
                 jsTxt.append("\n{severity:'");
             } else {
+                if (replacesIds) {
+                    replaceIdWithLabel(clientId, message, facesContext);
+                }
                 jsTxt.append("\n{clientId:'");
                 jsTxt.append(clientId);
                 jsTxt.append("', severity:'");
@@ -122,6 +134,37 @@ public class ComponentValidationListener implements PhaseListener {
             jsTxt.append(message.getDetail());
             jsTxt.append("'},");
         }
+    }
+
+    private static void replaceIdWithLabel(String clientId,
+            FacesMessage message, FacesContext facesContext) {
+        UIComponent label = findLabelFor(facesContext.getViewRoot(), clientId);
+        if (label != null) {
+            String text = (String) label.getAttributes().get("value");
+            String detail = message.getDetail();
+            String summary = message.getSummary();
+            message.setSummary(summary.replaceAll(clientId, text));
+            message.setDetail(detail.replaceAll(clientId, text));
+        }
+    }
+
+    private static UIComponent findLabelFor(UIComponent root, String clientId) {
+        for (UIComponent c : (List<UIComponent>) root.getChildren()) {
+            if ("javax.faces.Label".equals(c.getRendererType())) {
+                String labelFor = (String) c.getAttributes().get("for");
+                if (clientId.equals(labelFor)) {
+                    return c;
+                }
+            }
+            if (c.getChildCount() > 0) {
+                // look for the right label recursively
+                UIComponent label = findLabelFor(c, clientId);
+                if (label != null) {
+                    return label;
+                }
+            }
+        }
+        return null;
     }
 
     /**
