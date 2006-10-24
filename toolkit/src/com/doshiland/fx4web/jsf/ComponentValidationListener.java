@@ -27,8 +27,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.renderkit.html.util.AddResource;
 import org.apache.myfaces.renderkit.html.util.AddResourceFactory;
 
@@ -49,6 +52,8 @@ public class ComponentValidationListener implements PhaseListener {
 
     private static final String STYLECLASS_REQUIRED = "fx4web-required";
 
+    private static final Log log = LogFactory.getLog(ComponentValidationListener.class);
+    
     public void afterPhase(PhaseEvent event) {
         // do nothing
     }
@@ -60,7 +65,6 @@ public class ComponentValidationListener implements PhaseListener {
         AddResource addResource = AddResourceFactory.getInstance(facesContext);
         addReferences(facesContext, addResource);
         visitComponent(facesContext, root);
-        genJavaScriptCodeForMessages(facesContext);
         String jsTxt = genJavaScriptCodeForMessages(facesContext);
         if (jsTxt != null) {
             addResource.addInlineScriptAtPosition(facesContext,
@@ -113,8 +117,7 @@ public class ComponentValidationListener implements PhaseListener {
     private static void appendMessagesForClientId(FacesContext facesContext,
             String clientId, StringBuffer jsTxt) {
         Iterator<FacesMessage> messages = facesContext.getMessages(clientId);
-        boolean replacesIds = "true".equalsIgnoreCase((String) facesContext
-            .getExternalContext().getApplicationMap().get(PARAM_IDREPLACE));
+        boolean replacesIds = isReplaceId(facesContext);
         while (messages.hasNext()) {
             FacesMessage message = messages.next();
             if (clientId == null) {
@@ -136,15 +139,28 @@ public class ComponentValidationListener implements PhaseListener {
         }
     }
 
+    private static boolean isReplaceId(FacesContext facesContext) {
+        ServletContext webContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String val = webContext.getInitParameter(PARAM_IDREPLACE);
+        return "true".equalsIgnoreCase(val);
+    }
+
     private static void replaceIdWithLabel(String clientId,
             FacesMessage message, FacesContext facesContext) {
         UIComponent label = findLabelFor(facesContext.getViewRoot(), clientId);
         if (label != null) {
+            int idx = clientId.lastIndexOf(':');
+            if(idx >= 0) {
+                clientId = clientId.substring(idx+1);
+            }
+            log.debug("Replacing ID with Label for: " + clientId);
             String text = (String) label.getAttributes().get("value");
             String detail = message.getDetail();
             String summary = message.getSummary();
             message.setSummary(summary.replaceAll(clientId, text));
             message.setDetail(detail.replaceAll(clientId, text));
+        } else {
+            log.debug("Unabled to find a label for ID: " + clientId);
         }
     }
 
@@ -152,7 +168,7 @@ public class ComponentValidationListener implements PhaseListener {
         for (UIComponent c : (List<UIComponent>) root.getChildren()) {
             if ("javax.faces.Label".equals(c.getRendererType())) {
                 String labelFor = (String) c.getAttributes().get("for");
-                if (clientId.equals(labelFor)) {
+                if (clientId.equals(labelFor) || clientId.endsWith(":" + labelFor)) {
                     return c;
                 }
             }
