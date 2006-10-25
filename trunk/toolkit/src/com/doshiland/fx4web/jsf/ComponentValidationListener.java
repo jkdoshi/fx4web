@@ -76,8 +76,7 @@ public class ComponentValidationListener implements PhaseListener {
         if (facesContext.getMessages().hasNext()) {
             StringBuffer jsTxt = new StringBuffer(
                 "Event.observe(window, 'load', function() {FX4Web.showMessages([");
-            appendMessagesForClientId(facesContext, null, jsTxt);
-            // then add messages for each clientId that has them
+            // add messages for each clientId that has them (including 'null' for global messages)
             Iterator<String> itrClientIds = facesContext
                 .getClientIdsWithMessages();
             while (itrClientIds.hasNext()) {
@@ -117,13 +116,13 @@ public class ComponentValidationListener implements PhaseListener {
     private static void appendMessagesForClientId(FacesContext facesContext,
             String clientId, StringBuffer jsTxt) {
         Iterator<FacesMessage> messages = facesContext.getMessages(clientId);
-        boolean replacesIds = isReplaceId(facesContext);
+        boolean replaceIds = isReplaceId(facesContext);
         while (messages.hasNext()) {
             FacesMessage message = messages.next();
             if (clientId == null) {
                 jsTxt.append("\n{severity:'");
             } else {
-                if (replacesIds) {
+                if (replaceIds) {
                     replaceIdWithLabel(clientId, message, facesContext);
                 }
                 jsTxt.append("\n{clientId:'");
