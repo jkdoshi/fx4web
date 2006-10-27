@@ -98,7 +98,9 @@ FX4Web.hidePopup =  function(container) {
     container = $(container);
     container.style.display = 'none';
     var ssDiv = container.silkscreen;
-    ssDiv.parentNode.removeChild(ssDiv);
+    if(ssDiv && ssDiv.parentNode) {
+	    ssDiv.parentNode.removeChild(ssDiv);
+    }
     // restore buggy controls
 	for(var i = 0; i < document.buggyControls.length; i++) {
 		var control = document.buggyControls[i];
