@@ -102,9 +102,11 @@ FX4Web.hidePopup =  function(container) {
 	    ssDiv.parentNode.removeChild(ssDiv);
     }
     // restore buggy controls
-	for(var i = 0; i < document.buggyControls.length; i++) {
-		var control = document.buggyControls[i];
-		control['elem'].style.visibility = control['visibility'];
+    if(document.buggyControls) {
+		for(var i = 0; i < document.buggyControls.length; i++) {
+			var control = document.buggyControls[i];
+			control['elem'].style.visibility = control['visibility'];
+		}
 	}
 	document.buggyControls = [];
     //document.body.style.filter = '';
@@ -453,6 +455,72 @@ FX4Web.Floating.prototype.displace = function(evt) {
 }
 
 /* --------------------- Conversations ----------------------------*/
+	
+/**
+ * Instrument the window.open method such that the cid is added to the URL
+ * as search query string param.
+ */
+var originalWindowOpen;
+
+/* determine the correct conversation id for the given windowName.
+ * The window name could also be "_self", "_parent" etc. Also, if the
+ * resulting window name has '__' (double underscore) characters in it,
+ * only the part before the '__' will be used as the conversation id.
+ * This charater is used to have different window names and yet be able
+ * to share the same conversation id. */
+function getConversationID(windowName) {
+	var retval = windowName;
+	if(windowName && windowName.indexOf("_") == 0) {
+		var win = windowName.substring(1);
+		try {
+			retval = window[win].name;
+		} catch {
+			// a window by that name may not exist (no problem)
+		}
+	}
+	/* now look for a special separator ('__') */
+	if(retval && retval.indexOf('__') >= 0) {
+		var idx = retval.indexOf('__');
+		retval = retval.substring(0, idx);
+	}
+	return retval;
+}
+
+function enhancedWindowOpen(url, windowName, options, replace) {
+	if(arguments.length > 1) {
+		var cid = getConversationID(windowName);
+		if(cid) {
+			if(url.indexOf('?') > -1) {
+				url = url + "&_cid=" + cid;
+			} else {
+				url = url + "?_cid=" + cid;
+			}
+		}
+	}
+	var newWin;
+	if(arguments.length > 3) {
+		newWin = originalWindowOpen(url, windowName, options, replace);
+	} else if(arguments.length == 3) {
+		newWin = originalWindowOpen(url, windowName, options);
+	} else if(arguments.length == 2) {
+		newWin = originalWindowOpen(url, windowName);
+	} else {
+		newWin = originalWindowOpen(url);
+	}
+	if(newWin) {
+		newWin.focus();
+	}
+	return newWin;
+}
+
+// override only once
+if(typeof originalWindowOpen == 'undefined'
+		&& window.open != enhancedWindowOpen) {
+	originalWindowOpen = window.open;
+	if(originalWindowOpen != enhancedWindowOpen) {
+		window.open = enhancedWindowOpen;
+	}
+}
 
 FX4Web.initConversations = function() {
 	function addParamToForms(fldname, fldvalue) {
@@ -492,68 +560,6 @@ FX4Web.initConversations = function() {
 					link.search = '?' + fldname + '=' + fldvalue;
 				}
 			}
-		}
-	}
-	
-	/**
-	 * Instrument the window.open method such that the cid is added to the URL
-	 * as search query string param.
-	 */
-	var originalWindowOpen;
-	
-	/* determine the correct conversation id for the given windowName.
-	 * The window name could also be "_self", "_parent" etc. Also, if the
-	 * resulting window name has '__' (double underscore) characters in it,
-	 * only the part before the '__' will be used as the conversation id.
-	 * This charater is used to have different window names and yet be able
-	 * to share the same conversation id. */
-	function getConversationID(windowName) {
-		var retval = windowName;
-		if(windowName && windowName.indexOf("_") == 0) {
-			var win = windowName.substring(1);
-			retval = window[win].name;
-		}
-		/* now look for a special separator ('__') */
-		if(retval && retval.indexOf('__') >= 0) {
-			var idx = retval.indexOf('__');
-			retval = retval.substring(0, idx);
-		}
-		return retval;
-	}
-	
-	function enhancedWindowOpen(url, windowName, options, replace) {
-		if(arguments.length > 1) {
-			var cid = getConversationID(windowName);
-			if(cid) {
-				if(url.indexOf('?') > -1) {
-					url = url + "&_cid=" + cid;
-				} else {
-					url = url + "?_cid=" + cid;
-				}
-			}
-		}
-		var newWin;
-		if(arguments.length > 3) {
-			newWin = originalWindowOpen(url, windowName, options, replace);
-		} else if(arguments.length == 3) {
-			newWin = originalWindowOpen(url, windowName, options);
-		} else if(arguments.length == 2) {
-			newWin = originalWindowOpen(url, windowName);
-		} else {
-			newWin = originalWindowOpen(url);
-		}
-		if(newWin) {
-			newWin.focus();
-		}
-		return newWin;
-	}
-	
-	// override only once
-	if(typeof originalWindowOpen == 'undefined'
-			&& window.open != enhancedWindowOpen) {
-		originalWindowOpen = window.open;
-		if(originalWindowOpen != enhancedWindowOpen) {
-			window.open = enhancedWindowOpen;
 		}
 	}
 	
