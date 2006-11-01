@@ -474,7 +474,7 @@ function getConversationID(windowName) {
 		var win = windowName.substring(1);
 		try {
 			retval = window[win].name;
-		} catch {
+		} catch(e) {
 			// a window by that name may not exist (no problem)
 		}
 	}
