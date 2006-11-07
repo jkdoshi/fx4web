@@ -16,6 +16,9 @@ FX4Web.showMessages([
 {clientId:'_idJsp2:txt4', severity:'Error', summary:'Validation Error', detail:'"txt4": Value is required.'}]
 , {title: 'Validation Messages'});
 }
+function showMessage() {
+FX4Web.showMessage("Yo!", "Man!");
+}
 function doit() {
 	var dims = FX4Web.getWindowSize();
 	alert(dims.width + "x" + dims.height);
@@ -29,7 +32,7 @@ border: 3px solid blue;
 </style>
 </head>
 <body onload="doit()">
-<h1 onclick='showMessages()'>Show Messages</h1>
+<h1 onclick='showMessage()'>Show Messages</h1>
 <input type="text" id="txtUrl"  style='background-color: red' />
 <input value="show html" type="submit" />
 <select>

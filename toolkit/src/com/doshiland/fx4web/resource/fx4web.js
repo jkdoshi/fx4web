@@ -376,7 +376,7 @@ FX4Web.float =  function(node, options) { /* title is optional */
 
 /* display application messages stored in a javascript array */
 FX4Web.showMessages =  function(messages, title) {
-    var container = document.createElement('OL');
+    var container = document.createElement('UL');
     for(var i = 0; i < messages.length; i++) {
         var li = document.createElement('LI');
         var msg = messages[i];
@@ -412,6 +412,16 @@ FX4Web.showMessages =  function(messages, title) {
         });
     }
     return container;
+}
+
+/* display a single application message */
+/*
+ * Params: msg - the message to show
+ *         title - (optional param) if passed, it will be the title of the message window.
+ */
+FX4Web.showMessage =  function(msg, title) {
+	title = (title) ? title : "Application Message";
+	return FX4Web.showMessages([{detail: msg, summary: msg, severity: "INFO"}], {title: title});
 }
 
 /* makes a block level element "floating" or draggable (optionally, with a drag handle) */
