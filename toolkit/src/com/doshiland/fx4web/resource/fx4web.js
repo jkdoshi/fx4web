@@ -317,6 +317,15 @@ FX4Web.getWindowSize =  function() {
     }
 }
 
+/* traverse the parent hierarchy of the window to find the root window (one ti */
+FX4Web.getRootWindow =  function() {
+	var cur = window;
+	while(cur.opener) {
+		cur = cur.opener;
+	}
+	return cur;
+}
+
 /* position the element in the center of the visible part of the current window */
 FX4Web.center =  function(elem) {
     elem = $(elem);
@@ -550,8 +559,8 @@ FX4Web.initConversations = function() {
 	
 	function isLinkInstrumentable(link) {
 		var flag = typeof link.href != 'undefined'
-			&& !(link.href.indexOf('#') == 0
-				|| link.href.indexOf('javascript:') == 0);
+			&& link.href.indexOf('#') < 0
+			&& link.href.indexOf(window.location.protocol) == 0;
 		return flag;
 	}
 	
