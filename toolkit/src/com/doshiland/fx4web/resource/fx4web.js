@@ -337,7 +337,7 @@ FX4Web.center =  function(elem) {
 }
 
 /* wrap decorations around the given node and make it draggable */
-FX4Web.float =  function(node, options) { /* title is optional */
+FX4Web.floatElement =  function(node, options) { /* title is optional */
     var options = options ? options : {};
     var container = this.wrap(node, 'DIV');
     container.className = 'fx4web-floating';
@@ -410,7 +410,7 @@ FX4Web.showMessages =  function(messages, title) {
         li.appendChild(child);
         container.appendChild(li);
     }
-    container = this.float(container, title);
+    container = this.floatElement(container, title);
     var body = document.body;
     if(document.body) {
         document.body.appendChild(container);
@@ -429,7 +429,7 @@ FX4Web.showMessages =  function(messages, title) {
  * Params: msg - the message to show
  *         title - (optional param) if passed, it will be the title of the message window.
  */
-FX4Web.showMessage =  function(msg, level, title) {
+FX4Web.showMessage =  function(msg, severity, title) {
 	title = (title) ? title : "Application Message";
 	severity = (severity) ? severity : "Info";
 	return FX4Web.showMessages([{detail: msg, summary: msg, severity: severity}], {title: title});
