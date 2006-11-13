@@ -429,9 +429,10 @@ FX4Web.showMessages =  function(messages, title) {
  * Params: msg - the message to show
  *         title - (optional param) if passed, it will be the title of the message window.
  */
-FX4Web.showMessage =  function(msg, title) {
+FX4Web.showMessage =  function(msg, level, title) {
 	title = (title) ? title : "Application Message";
-	return FX4Web.showMessages([{detail: msg, summary: msg, severity: "INFO"}], {title: title});
+	severity = (severity) ? severity : "Info";
+	return FX4Web.showMessages([{detail: msg, summary: msg, severity: severity}], {title: title});
 }
 
 /* makes a block level element "floating" or draggable (optionally, with a drag handle) */

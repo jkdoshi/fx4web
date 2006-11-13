@@ -56,6 +56,11 @@ div.fx4web-floating ul li, div.fx4web-floating table td {
 	cursor: pointer;
 }
 
+div.fx4web-floating ul li.fx4web-global {
+	text-decoration: none;
+	cursor: default;
+}
+
 div.fx4web-floating {
 	border-width: 2px 2px 2px 2px;
 	border-color: blue;
@@ -118,6 +123,7 @@ div#silkscreen {
 	background-color: white;
 }
 
+/*
 div.fx4web-floating ul li.fx4web-Info {
 	list-style-image: url("../img/icon_info.gif");
 }
@@ -133,3 +139,4 @@ div.fx4web-floating ul li.fx4web-Error {
 div.fx4web-floating ul li.fx4web-Fatal {
 	list-style-image: url("../img/icon_error.gif");
 }
+*/
