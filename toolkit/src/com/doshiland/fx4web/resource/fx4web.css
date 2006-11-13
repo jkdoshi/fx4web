@@ -117,3 +117,19 @@ div#silkscreen {
 	z-index: 150;
 	background-color: white;
 }
+
+div.fx4web-floating ul li.fx4web-Info {
+	list-style-image: url("../img/icon_info.gif");
+}
+
+div.fx4web-floating ul li.fx4web-Warn {
+	list-style-image: url("../img/icon_warning.gif");
+}
+
+div.fx4web-floating ul li.fx4web-Error {
+	list-style-image: url("../img/icon_error.gif");
+}
+
+div.fx4web-floating ul li.fx4web-Fatal {
+	list-style-image: url("../img/icon_error.gif");
+}

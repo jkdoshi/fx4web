@@ -10,10 +10,11 @@
 <script type="text/javascript"><!--
 function showMessages() {
 FX4Web.showMessages([
-{clientId:'txtUrl', severity:'Error', summary:'Validation Error', detail:'"txt1": Value is required.'},
+{severity:'Fatal', summary:'no-client-id summary', detail:'no-client-id detail'},
+{clientId:'txtUrl', severity:'Fatal', summary:'Validation Error', detail:'"txt1": Value is required.'},
 {clientId:'_idJsp2:txt2', severity:'Error', summary:'Validation Error', detail:'"txt2": Value is required.'},
-{clientId:'_idJsp2:txt3', severity:'Error', summary:'Validation Error', detail:'"txt3": Value is required.'},
-{clientId:'_idJsp2:txt4', severity:'Error', summary:'Validation Error', detail:'"txt4": Value is required.'}]
+{clientId:'_idJsp2:txt3', severity:'Info', summary:'Validation Error', detail:'"txt3": Value is required.'},
+{clientId:'_idJsp2:txt4', severity:'Warn', summary:'Validation Error', detail:'"txt4": Value is required.'}]
 , {title: 'Validation Messages'});
 }
 function showMessage() {
@@ -32,7 +33,7 @@ border: 3px solid blue;
 </style>
 </head>
 <body onload="doit()">
-<h1 onclick='showMessage()'>Show Messages</h1>
+<h1 onclick='showMessages()'>Show Messages</h1>
 <input type="text" id="txtUrl"  style='background-color: red' />
 <input value="show html" type="submit" />
 <select>
