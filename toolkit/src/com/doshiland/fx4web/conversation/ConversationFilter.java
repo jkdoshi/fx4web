@@ -50,6 +50,12 @@ public class ConversationFilter implements Filter {
      */
     public static final String CID_KEY = "_cid";
 
+    /**
+     * The default name used for the request parameter indicating the currently
+     * active conversation id.
+     */
+    public static final String CREATE_KEY = "_create";
+
     private static final Log log = LogFactory.getLog(ConversationFilter.class);
 
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -60,8 +66,17 @@ public class ConversationFilter implements Filter {
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         String cid = getConversationID(request);
+        boolean create = isConversationCreate(request);
         HttpSession session = request.getSession();
         ConversationMap conversationMap = ConversationMap.getInstance(session);
+        if(create) {
+            log.debug("Creating conversation id: " + cid);
+            // new conversation
+            Conversation old = conversationMap.put(cid, new Conversation());
+            if(old != null) {
+                log.debug("Replaced an existing conversation");
+            }
+        }
         // move all objects from conversation to session
         conversationMap.loadConversation(cid);
         try {
@@ -74,6 +89,15 @@ public class ConversationFilter implements Filter {
 
     public static String getConversationID(ServletRequest request) {
         return request.getParameter(CID_KEY);
+    }
+
+    public static boolean isConversationCreate(ServletRequest request) {
+        String str = request.getParameter(CREATE_KEY);
+        if(str != null) {
+            return Boolean.parseBoolean(str);
+        } else {
+            return false;
+        }
     }
 
     public void destroy() {

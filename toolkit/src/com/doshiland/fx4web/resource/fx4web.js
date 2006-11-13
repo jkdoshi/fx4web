@@ -512,9 +512,9 @@ function enhancedWindowOpen(url, windowName, options, replace) {
 		var cid = getConversationID(windowName);
 		if(cid) {
 			if(url.indexOf('?') > -1) {
-				url = url + "&_cid=" + cid;
+				url = url + "&_cid=" + cid + "&_create=true";
 			} else {
-				url = url + "?_cid=" + cid;
+				url = url + "?_cid=" + cid + "&_create=true";
 			}
 		}
 	}
