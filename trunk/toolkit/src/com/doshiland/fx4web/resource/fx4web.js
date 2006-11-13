@@ -404,6 +404,7 @@ FX4Web.showMessages =  function(messages, title) {
             child.appendChild(textNode);
             child.href = 'javascript:$("' + msg.clientId + '").focus()';
         } else {
+        	li.className += " fx4web-global";
             child = textNode;
         }
         li.appendChild(child);
