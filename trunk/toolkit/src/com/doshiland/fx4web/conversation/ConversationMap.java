@@ -133,10 +133,8 @@ public class ConversationMap extends HashMap<String, Conversation> {
     public Conversation get(Object key) {
         Conversation conversation = super.get(key);
         if (conversation == null) {
-            log.debug("Creating conversation id: " + key);
-            // new conversation
-            conversation = new Conversation();
-            put((String) key, conversation);
+            log.warn("Conversation not found: " + key);
+            throw new IllegalArgumentException("Conversation not found: " + key);
         } else {
             log.debug("Loading conversation id: " + key);
         }
