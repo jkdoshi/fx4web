@@ -507,14 +507,23 @@ function getConversationID(windowName) {
 	return retval;
 }
 
+function isCreateNewConversation(windowName) {
+	var create = false;
+	if(windowName) {
+		create = !(windowName.indexOf("__") >= 0);
+	}
+	return create;
+}
+
 function enhancedWindowOpen(url, windowName, options, replace) {
 	if(arguments.length > 1) {
 		var cid = getConversationID(windowName);
+		var create = isCreateNewConversation(windowName);
 		if(cid) {
 			if(url.indexOf('?') > -1) {
-				url = url + "&_cid=" + cid + "&_create=true";
+				url = url + "&_cid=" + cid + "&_create=" + create;
 			} else {
-				url = url + "?_cid=" + cid + "&_create=true";
+				url = url + "?_cid=" + cid + "&_create=" + create;
 			}
 		}
 	}
