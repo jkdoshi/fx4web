@@ -29,11 +29,10 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.servlet.ServletContext;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.myfaces.renderkit.html.util.AddResource;
-import org.apache.myfaces.renderkit.html.util.AddResourceFactory;
+//import org.apache.myfaces.renderkit.html.util.AddResource;
+//import org.apache.myfaces.renderkit.html.util.AddResourceFactory;
 
 @SuppressWarnings("serial")
 public class ComponentValidationListener implements PhaseListener {
@@ -62,13 +61,13 @@ public class ComponentValidationListener implements PhaseListener {
     public void beforePhase(PhaseEvent event) {
         FacesContext facesContext = event.getFacesContext();
         UIViewRoot root = facesContext.getViewRoot();
-        AddResource addResource = AddResourceFactory.getInstance(facesContext);
-        addReferences(facesContext, addResource);
+//        AddResource addResource = AddResourceFactory.getInstance(facesContext);
+//        addReferences(facesContext, addResource);
         visitComponent(facesContext, root);
         String jsTxt = genJavaScriptCodeForMessages(facesContext);
         if (jsTxt != null) {
-            addResource.addInlineScriptAtPosition(facesContext,
-                AddResource.HEADER_BEGIN, jsTxt);
+//            addResource.addInlineScriptAtPosition(facesContext,
+//                AddResource.HEADER_BEGIN, jsTxt);
         }
     }
 
@@ -94,6 +93,7 @@ public class ComponentValidationListener implements PhaseListener {
         }
     }
 
+    /*
     private static void addReferences(FacesContext facesContext,
             AddResource addResource) {
         addJavaScriptRef(facesContext, addResource, "prototype.js");
@@ -112,7 +112,8 @@ public class ComponentValidationListener implements PhaseListener {
         addResource.addJavaScriptAtPosition(facesContext,
             AddResource.HEADER_BEGIN, MAPPING_PREFIX + uri);
     }
-
+	*/
+    
     private static void appendMessagesForClientId(FacesContext facesContext,
             String clientId, StringBuffer jsTxt) {
         Iterator<FacesMessage> messages = facesContext.getMessages(clientId);
@@ -208,7 +209,7 @@ public class ComponentValidationListener implements PhaseListener {
             String newStyleClass) {
         String styleClass = (String) component.getAttributes().get(
             ATTR_STYLECLASS);
-        if (StringUtils.isEmpty(styleClass)) {
+        if (styleClass == null || styleClass.length() == 0) {
             styleClass = newStyleClass;
         } else {
             styleClass += " " + newStyleClass;
