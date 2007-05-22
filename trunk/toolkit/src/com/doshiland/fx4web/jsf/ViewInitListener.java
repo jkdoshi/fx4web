@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -72,13 +73,17 @@ public class ViewInitListener implements PhaseListener {
         UIViewRoot root = facesContext.getViewRoot();
         String viewId = root.getViewId();
         log.debug("Before render view: " + viewId);
-        String action = (String) config.get(viewId);
-        if (action != null) {
-            log.debug("Finding view-init action: " + action);
-            MethodBinding binding = facesContext.getApplication()
-                .createMethodBinding(action, new Class[] {});
-            log.debug("Invoking view-init action: " + action);
-            binding.invoke(facesContext, new Object[] {});
+        String actions = (String) config.get(viewId);
+        if (actions != null && actions.length() != 0) {
+        	StringTokenizer tokenizer = new StringTokenizer(actions);
+        	while(tokenizer.hasMoreTokens()) {
+        		String action = tokenizer.nextToken();
+                log.debug("Finding view-init action: " + action);
+                MethodBinding binding = facesContext.getApplication()
+                    .createMethodBinding(action, new Class[] {});
+                log.debug("Invoking view-init action: " + action);
+                binding.invoke(facesContext, new Object[] {});
+        	}
         }
     }
 
